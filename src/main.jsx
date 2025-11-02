@@ -1,0 +1,20 @@
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
+import { VehiclesProvider } from './context/VehiclesContext'
+import { AuthProvider } from './context/AuthContext'
+import './components/styles.css'
+
+// Punto de entrada: monta React en el elemento #root
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <VehiclesProvider>
+          <App />
+        </VehiclesProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+)
