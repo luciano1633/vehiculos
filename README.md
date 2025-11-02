@@ -92,9 +92,3 @@ Archivos clave
  npm run deploy
  ```
 
- 3) Alternativa: usar GitHub Actions para desplegar automáticamente desde la rama `main` al permitir Pages en la configuración del repositorio (con la carpeta `dist` o `gh-pages`).
-
- Notas
- - Si vas a usar `gh-pages`, asegúrate de que la propiedad `homepage` en `package.json` (opcional) apunte a `https://USUARIO.github.io/REPO` para que las rutas relativas funcionen correctamente.
- - Para un entorno profesional/restringido, reemplaza la autenticación hardcodeada por un backend o servicio de autenticación.
-
