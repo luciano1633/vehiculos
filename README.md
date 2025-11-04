@@ -92,3 +92,11 @@ Archivos clave
  npm run deploy
  ```
 
+Publicación actual
+
+Este proyecto ya fue publicado en GitHub Pages. Puedes ver la versión en vivo aquí:
+
+- https://luciano1633.github.io/vehiculos
+
+Coloca ese enlace en tu README o compártelo con clientes/compañeros para ver la demo.
+

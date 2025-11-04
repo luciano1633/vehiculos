@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 // Página informativa: describe la empresa, valores y llamada a la acción
 export default function QuienesSomos() {
@@ -10,8 +11,8 @@ export default function QuienesSomos() {
           <p className="hero-sub">Más de 20 años conectando personas con su próximo vehículo, con transparencia y servicio.</p>
           <p className="hero-cta">Nuestro compromiso es hacer la compra simple, segura y agradable.</p>
           <div className="hero-actions">
-            <a className="btn primary" href="/">Ver catálogo</a>
-            <a className="btn ghost" href="/contacto">Contactar asesor</a>
+            <Link className="btn primary" to="/">Ver catálogo</Link>
+            <Link className="btn ghost" to="/contacto">Contactar asesor</Link>
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
@@ -72,7 +73,7 @@ export default function QuienesSomos() {
         <div className="quienes-cta">
           <h3>Listo para ver las opciones?</h3>
           <p>Explora nuestro catálogo y agenda una prueba de manejo sin compromiso.</p>
-          <a className="btn primary large" href="/">Explorar vehículos</a>
+          <Link className="btn primary large" to="/">Explorar vehículos</Link>
         </div>
       </section>
     </main>

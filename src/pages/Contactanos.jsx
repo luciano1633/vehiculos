@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 // Página de contacto con formulario y métodos para mostrar toasts/modal de llamada
 export default function Contactanos(){
@@ -39,8 +40,8 @@ export default function Contactanos(){
           <h1 id="contacto-title">Contáctanos</h1>
           <p className="hero-sub">Estamos listos para ayudarte a elegir el mejor vehículo. Completa el formulario o utiliza los datos de contacto.</p>
           <div className="hero-actions">
-            <a className="btn primary" href="/">Ver catálogo</a>
-            <a className="btn ghost" href="/quienes">Conócenos</a>
+            <Link className="btn primary" to="/">Ver catálogo</Link>
+            <Link className="btn ghost" to="/quienes">Conócenos</Link>
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">

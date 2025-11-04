@@ -7,9 +7,12 @@ import { AuthProvider } from './context/AuthContext'
 import './components/styles.css'
 
 // Punto de entrada: monta React en el elemento #root
+// Nota: la aplicación está configurada para desplegarse bajo la ruta base
+// '/vehiculos/' (ver `vite.config.js`). Para que React Router funcione
+// correctamente cuando la app se sirve en ese subpath, pasamos `basename`.
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/vehiculos">
       <AuthProvider>
         <VehiclesProvider>
           <App />

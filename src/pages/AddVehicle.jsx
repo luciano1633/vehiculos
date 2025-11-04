@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useVehicles } from '../context/VehiclesContext'
 
@@ -97,8 +98,8 @@ export default function AddVehicle(){
           <h1 id="add-veh-title">Agregar vehículo</h1>
           <p className="hero-sub">Incluye un nuevo vehículo al inventario del sitio.</p>
           <div className="hero-actions">
-            <a className="btn primary" href="/">Inicio</a>
-            <a className="btn ghost" href="/inventario">Ver inventario</a>
+            <Link className="btn primary" to="/">Inicio</Link>
+            <Link className="btn ghost" to="/inventario">Ver inventario</Link>
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">

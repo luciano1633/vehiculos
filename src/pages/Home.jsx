@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import kiaImg from '../components/img/kia.jpeg'
 import kiaImg2 from '../components/img/kia2.jpeg'
 import subaruImg from '../components/img/subaru.jpg'
@@ -73,8 +74,8 @@ export default function Home(){
           <p className="hero-sub">Círculo Automotriz</p>
           <p className="hero-cta">Encuentra tu próximo vehículo con las mejores ofertas.</p>
           <div className="hero-actions">
-            <a className="btn primary" href="/">Ver catálogo</a>
-            <a className="btn ghost" href="/contacto">Contactar asesor</a>
+            <Link className="btn primary" to="/">Ver catálogo</Link>
+            <Link className="btn ghost" to="/contacto">Contactar asesor</Link>
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
