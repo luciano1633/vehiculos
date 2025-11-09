@@ -1,12 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
-// Usar rutas desde public para assets estáticos
-const kiaImg = '/vehiculos/img/kia.jpg'
-const kiaImg2 = '/vehiculos/img/kia2.jpg'
-const subaruImg = '/vehiculos/img/subaru.jpg'
-const subaruImg2 = '/vehiculos/img/subaru2.jpg'
-const hyundaiImg = '/vehiculos/img/hyundai.jpg'
-const hyundaiImg2 = '/vehiculos/img/hiundai2.jpg'
+// Helper para generar rutas de imágenes públicas
+const getImagePath = (filename) => {
+  const base = import.meta.env.BASE_URL || '/'
+  const path = `${base}img/${filename}`
+  console.log('Image path generated:', path, 'for file:', filename)
+  return path
+}
+
+// Rutas de imágenes desde public
+const kiaImg = getImagePath('kia.jpg')
+const kiaImg2 = getImagePath('kia2.jpg')
+const subaruImg = getImagePath('subaru.jpg')
+const subaruImg2 = getImagePath('subaru2.jpg')
+const hyundaiImg = getImagePath('hyundai.jpg')
+const hyundaiImg2 = getImagePath('hiundai2.jpg')
+
+console.log('BASE_URL:', import.meta.env.BASE_URL)
+console.log('Sample image path:', kiaImg)
 
 const VehiclesContext = createContext(null)
 
