@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { useVehicles } from '../context/VehiclesContext'
 import { parsePrice } from '../utils/price'
-import styles from './Inventory.module.css'
+import styles from '../styles/Inventory.module.css'
 
 // Página que lista el inventario en una tabla con filtros y detalle
 export default function Inventory(){

@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { VehiclesProvider } from './context/VehiclesContext'
 import { AuthProvider } from './context/AuthContext'
-import './components/styles.css'
+import './styles/global.css'
 
 // Punto de entrada: monta React en el elemento #root
 
