@@ -40,8 +40,8 @@ export default function Inventory(){
       <h2>Inventario de vehículos</h2>
 
       <div className="card mb-3 p-3" style={{background:'transparent',border:'none'}}>
-        <div className="row gx-3 gy-2 align-items-end">
-          <div className="col-sm-3">
+        <div className="row gx-3 gy-2 align-items-end" style={{display:'flex',alignItems:'flex-end',gap:12}}>
+          <div className="col-sm-3" style={{minWidth:160}}>
             <label className="form-label">Marca</label>
             <select className="form-select" value={marca} onChange={e=>setMarca(e.target.value)}>
               <option value="">Todas</option>
@@ -49,7 +49,7 @@ export default function Inventory(){
             </select>
           </div>
 
-          <div className="col-sm-3">
+          <div className="col-sm-3" style={{minWidth:160}}>
             <label className="form-label">Año</label>
             <select className="form-select" value={year} onChange={e=>setYear(e.target.value)}>
               <option value="">Todos</option>
@@ -57,12 +57,12 @@ export default function Inventory(){
             </select>
           </div>
 
-          <div className="col-sm-3">
+          <div className="col-sm-3" style={{minWidth:200}}>
             <label className="form-label">Precio máximo (CLP)</label>
             <input className="form-control" placeholder="ej. 15000000" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} />
           </div>
 
-          <div className="col-sm-3 d-flex gap-2">
+          <div className="col-sm-3 d-flex gap-2" style={{minWidth:180}}>
             <button className="btn btn-outline-secondary" onClick={()=>{ setMarca(''); setYear(''); setMaxPrice('') }}>Limpiar</button>
             <button className="btn btn-primary" onClick={()=>{ /* placeholder: could trigger analytics */ }}>Filtrar</button>
           </div>
@@ -73,7 +73,7 @@ export default function Inventory(){
         {filtered.map(v => (
           <div key={v.id} className="col-md-4 mb-3">
             <article className="card vehicle-card h-100" style={{cursor:'pointer'}} onClick={()=>setDetail(v)}>
-              <img src={v.img} alt={v.title} />
+              <img src={v.img} alt={v.title} style={{width:'100%',height:200,objectFit:'cover',background:'#2d2d2d'}} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%232d2d2d"/><text x="50%" y="50%" fill="%23aaa" font-size="20" text-anchor="middle" dominant-baseline="middle">Imagen no disponible</text></svg>'}} />
               <div className="card-body">
                 <h3>{v.title}</h3>
                 <p style={{color:'var(--muted)'}}>{v.desc}</p>
