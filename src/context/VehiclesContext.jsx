@@ -68,6 +68,27 @@ export function VehiclesProvider({ children }){
   // Clave usada en localStorage
   const STORAGE_KEY = 'venta_de_vehiculos'
 
+  // Helper para migrar rutas de imágenes antiguas a nuevas
+  const migrateImagePaths = (vehiclesList) => {
+    return vehiclesList.map(vehicle => {
+      // Si la imagen tiene una ruta antigua (src/components/img), actualizarla
+      if (vehicle.img && vehicle.img.includes('src/components/img')) {
+        const filename = vehicle.img.split('/').pop()
+        vehicle.img = getImagePath(filename)
+      }
+      if (vehicle.gallery && Array.isArray(vehicle.gallery)) {
+        vehicle.gallery = vehicle.gallery.map(imgPath => {
+          if (imgPath.includes('src/components/img')) {
+            const filename = imgPath.split('/').pop()
+            return getImagePath(filename)
+          }
+          return imgPath
+        })
+      }
+      return vehicle
+    })
+  }
+
   // Inicializar el estado leyendo desde localStorage si existe; si no, usar initialVehicles
   // Migración: antes guardábamos solo un array de vehicles; ahora guardamos un objeto { vehicles, possible }
   const [vehicles, setVehicles] = useState(() => {
@@ -76,8 +97,8 @@ export function VehiclesProvider({ children }){
       if(!raw) return initialVehicles
       const parsed = JSON.parse(raw)
       // Soportar formato antiguo (array)
-      if(Array.isArray(parsed)) return parsed
-      if(parsed && Array.isArray(parsed.vehicles)) return parsed.vehicles
+      if(Array.isArray(parsed)) return migrateImagePaths(parsed)
+      if(parsed && Array.isArray(parsed.vehicles)) return migrateImagePaths(parsed.vehicles)
       return initialVehicles
     } catch (err){
       return initialVehicles
@@ -90,7 +111,7 @@ export function VehiclesProvider({ children }){
       if(!raw) return []
       const parsed = JSON.parse(raw)
       if(Array.isArray(parsed)) return []
-      if(parsed && Array.isArray(parsed.possiblePurchases)) return parsed.possiblePurchases
+      if(parsed && Array.isArray(parsed.possiblePurchases)) return migrateImagePaths(parsed.possiblePurchases)
       return []
     } catch (err){
       return []
