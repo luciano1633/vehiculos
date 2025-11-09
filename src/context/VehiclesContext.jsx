@@ -3,9 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 // Helper para generar rutas de imágenes públicas
 const getImagePath = (filename) => {
   const base = import.meta.env.BASE_URL || '/'
-  const path = `${base}img/${filename}`
-  console.log('Image path generated:', path, 'for file:', filename)
-  return path
+  return `${base}img/${filename}`
 }
 
 // Rutas de imágenes desde public
@@ -15,9 +13,6 @@ const subaruImg = getImagePath('subaru.jpg')
 const subaruImg2 = getImagePath('subaru2.jpg')
 const hyundaiImg = getImagePath('hyundai.jpg')
 const hyundaiImg2 = getImagePath('hiundai2.jpg')
-
-console.log('BASE_URL:', import.meta.env.BASE_URL)
-console.log('Sample image path:', kiaImg)
 
 const VehiclesContext = createContext(null)
 
@@ -141,22 +136,36 @@ export function VehiclesProvider({ children }){
 
   // Marca un vehículo como posible compra: lo mueve desde `vehicles` hacia `possiblePurchases`
   const markPossiblePurchase = (id) => {
-    setVehicles(prev => {
-      const item = prev.find(v => v.id === id)
-      if(!item) return prev
-      setPossiblePurchases(pp => [...pp, item])
-      return prev.filter(v => v.id !== id)
-    })
+    const item = vehicles.find(v => v.id === id)
+    if (!item) return
+    
+    // Verificar que no esté ya en posibles compras
+    const alreadyMarked = possiblePurchases.some(v => v.id === id)
+    if (alreadyMarked) {
+      console.warn('Vehicle already in possible purchases:', id)
+      return
+    }
+    
+    // Actualizar ambos estados
+    setVehicles(prev => prev.filter(v => v.id !== id))
+    setPossiblePurchases(prev => [...prev, item])
   }
 
   // Desmarca un vehículo (lo devuelve al inventario general)
   const unmarkPossiblePurchase = (id) => {
-    setPossiblePurchases(prev => {
-      const item = prev.find(v => v.id === id)
-      if(!item) return prev
-      setVehicles(vs => [...vs, item])
-      return prev.filter(v => v.id !== id)
-    })
+    const item = possiblePurchases.find(v => v.id === id)
+    if (!item) return
+    
+    // Verificar que no esté ya en vehículos
+    const alreadyInInventory = vehicles.some(v => v.id === id)
+    if (alreadyInInventory) {
+      console.warn('Vehicle already in inventory:', id)
+      return
+    }
+    
+    // Actualizar ambos estados
+    setPossiblePurchases(prev => prev.filter(v => v.id !== id))
+    setVehicles(prev => [...prev, item])
   }
 
   const value = { vehicles, addVehicle, toggleAvailability, possiblePurchases, markPossiblePurchase, unmarkPossiblePurchase }
