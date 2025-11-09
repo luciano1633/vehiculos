@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useVehicles } from '../context/VehiclesContext'
+import { parsePrice } from '../utils/price'
 import styles from './Inventory.module.css'
 
 // Página que lista el inventario en una tabla con filtros y detalle
@@ -12,12 +13,6 @@ export default function Inventory(){
 
   // Modal para detalle
   const [detail, setDetail] = useState(null)
-
-  // Helper para parsear precio a número (quita símbolos y puntos)
-  const parsePrice = (p) => {
-    if(!p) return 0
-    return Number(String(p).replace(/[^0-9]/g, '')) || 0
-  }
 
   // Opciones únicas para selects
   const marcas = useMemo(()=> Array.from(new Set(vehicles.map(v=>v.marca).filter(Boolean))), [vehicles])
@@ -72,7 +67,13 @@ export default function Inventory(){
         {filtered.map(v => (
           <div key={v.id} className="col-md-4 mb-3">
             <article className="card vehicle-card h-100" style={{cursor:'pointer'}} onClick={()=>setDetail(v)}>
-              <img src={v.img} alt={v.title} style={{width:'100%',height:200,objectFit:'cover',background:'#2d2d2d'}} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%232d2d2d"/><text x="50%" y="50%" fill="%23aaa" font-size="20" text-anchor="middle" dominant-baseline="middle">Imagen no disponible</text></svg>'}} />
+              <img 
+                src={v.img} 
+                alt={v.title} 
+                loading="lazy"
+                style={{width:'100%',height:200,objectFit:'cover',background:'#2d2d2d'}} 
+                onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%232d2d2d"/><text x="50%" y="50%" fill="%23aaa" font-size="20" text-anchor="middle" dominant-baseline="middle">Imagen no disponible</text></svg>'}} 
+              />
               <div className="card-body">
                 <h3>{v.title}</h3>
                 <p style={{color:'var(--muted)'}}>{v.desc}</p>

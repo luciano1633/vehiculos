@@ -1,88 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-
-// Helper para generar rutas de imágenes públicas
-const getImagePath = (filename) => {
-  const base = import.meta.env.BASE_URL || '/'
-  return `${base}img/${filename}`
-}
-
-// Rutas de imágenes desde public
-const kiaImg = getImagePath('kia.jpg')
-const kiaImg2 = getImagePath('kia2.jpg')
-const subaruImg = getImagePath('subaru.jpg')
-const subaruImg2 = getImagePath('subaru2.jpg')
-const hyundaiImg = getImagePath('hyundai.jpg')
-const hyundaiImg2 = getImagePath('hiundai2.jpg')
+import { STORAGE_KEYS } from '../constants/storage'
+import { getImagePath, migrateImagePaths } from '../utils/images'
+import { initialVehicles } from '../data/vehicles'
 
 const VehiclesContext = createContext(null)
 
-// Inventario inicial (se puede ampliar)
-const initialVehicles = [
-  {
-    id: 1,
-    marca: 'Kia',
-    modelo: 'K3',
-    title: 'Kia K3',
-    desc: 'Confort y eficiencia.',
-    year: 2024,
-    km: '12.000 km',
-    price: '$12.990.000',
-    status: 'disponible',
-    img: kiaImg,
-    gallery: [kiaImg, kiaImg2]
-  },
-  {
-    id: 2,
-    marca: 'Subaru',
-    modelo: 'WRX',
-    title: 'Subaru WRX',
-    desc: 'Rendimiento deportivo y tracción.',
-    year: 2023,
-    km: '30.500 km',
-    price: '$18.450.000',
-    status: 'disponible',
-    img: subaruImg,
-    gallery: [subaruImg, subaruImg2]
-  },
-  {
-    id: 3,
-    marca: 'Hyundai',
-    modelo: 'i30 Fastback',
-    title: 'Hyundai i30 Fastback',
-    desc: 'Diseño dinámico y versatilidad.',
-    year: 2022,
-    km: '22.100 km',
-    price: '$14.200.000',
-    status: 'disponible',
-    img: hyundaiImg,
-    gallery: [hyundaiImg, hyundaiImg2]
-  }
-]
-
 export function VehiclesProvider({ children }){
   // Clave usada en localStorage
-  const STORAGE_KEY = 'venta_de_vehiculos'
-
-  // Helper para migrar rutas de imágenes antiguas a nuevas
-  const migrateImagePaths = (vehiclesList) => {
-    return vehiclesList.map(vehicle => {
-      // Si la imagen tiene una ruta antigua (src/components/img), actualizarla
-      if (vehicle.img && vehicle.img.includes('src/components/img')) {
-        const filename = vehicle.img.split('/').pop()
-        vehicle.img = getImagePath(filename)
-      }
-      if (vehicle.gallery && Array.isArray(vehicle.gallery)) {
-        vehicle.gallery = vehicle.gallery.map(imgPath => {
-          if (imgPath.includes('src/components/img')) {
-            const filename = imgPath.split('/').pop()
-            return getImagePath(filename)
-          }
-          return imgPath
-        })
-      }
-      return vehicle
-    })
-  }
+  const STORAGE_KEY = STORAGE_KEYS.VEHICLES
 
   // Inicializar el estado leyendo desde localStorage si existe; si no, usar initialVehicles
   // Migración: antes guardábamos solo un array de vehicles; ahora guardamos un objeto { vehicles, possible }

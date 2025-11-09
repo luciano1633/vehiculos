@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState } from 'react'
+import { STORAGE_KEYS } from '../constants/storage'
 
 const AuthContext = createContext(null)
 
-const AUTH_KEY = 'venta_de_vehiculo_admin'
+const AUTH_KEY = STORAGE_KEYS.AUTH
 
 export function AuthProvider({ children }){
   const [isAuthenticated, setIsAuthenticated] = useState(() => {

@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
-// Helper para generar rutas de imágenes públicas
-const getImagePath = (filename) => {
-  const base = import.meta.env.BASE_URL || '/'
-  return `${base}img/${filename}`
-}
+import { getImagePath } from '../utils/images'
 
 // Rutas de imágenes desde public
 const kiaImg = getImagePath('kia.jpg')

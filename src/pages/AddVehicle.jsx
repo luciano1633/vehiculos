@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useVehicles } from '../context/VehiclesContext'
+import { formatPrice } from '../utils/price'
 
 // Página para agregar nuevos vehículos al inventario global
 // Se adapta a la misma presentación visual que las otras páginas usando
@@ -71,11 +72,10 @@ export default function AddVehicle(){
     e.preventDefault()
     // Validación mínima antes de enviar
     if(!form.marca || !form.modelo) return alert('Ingrese marca y modelo')
-  const rawPrice = (form.price || '').toString().trim()
-  const digits = rawPrice.replace(/[^0-9]/g, '')
-  const num = digits === '' ? 0 : parseInt(digits, 10)
-    const formattedNumber = new Intl.NumberFormat('es-CL').format(num) // ej. 1.200.000
-  const priceValue = `$${formattedNumber}`
+    const rawPrice = (form.price || '').toString().trim()
+    const digits = rawPrice.replace(/[^0-9]/g, '')
+    const num = digits === '' ? 0 : parseInt(digits, 10)
+    const priceValue = formatPrice(num)
 
     addVehicle({
       marca: form.marca,

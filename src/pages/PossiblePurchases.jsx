@@ -14,7 +14,12 @@ export default function PossiblePurchases(){
         <div className="cards">
           {possiblePurchases.map(v => (
             <article key={v.id} className="card value-card">
-              <img src={v.img} alt={v.title} style={{width:'100%',height:160,objectFit:'cover',borderRadius:8}} />
+              <img 
+                src={v.img} 
+                alt={v.title} 
+                loading="lazy"
+                style={{width:'100%',height:160,objectFit:'cover',borderRadius:8}} 
+              />
               <div className="card-body">
                 <h3>{v.title}</h3>
                 <p style={{color:'var(--muted)'}}>{v.desc}</p>
