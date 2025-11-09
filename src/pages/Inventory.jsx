@@ -139,10 +139,6 @@ export default function Inventory(){
                   <p style={{margin:0}}>{detail.year}</p>
                 </div>
                 <div>
-                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Kilometraje</strong>
-                  <p style={{margin:0}}>{detail.km}</p>
-                </div>
-                <div>
                   <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Precio</strong>
                   <p style={{margin:0,fontSize:'1.2rem',fontWeight:'700',color:'var(--primary)'}}>{detail.price}</p>
                 </div>

@@ -21,7 +21,6 @@ export default function PossiblePurchases(){
                   <p style={{margin:'0.25rem 0'}}><strong>Marca:</strong> {v.marca}</p>
                   <p style={{margin:'0.25rem 0'}}><strong>Modelo:</strong> {v.modelo}</p>
                   <p style={{margin:'0.25rem 0'}}><strong>Año:</strong> {v.year}</p>
-                  <p style={{margin:'0.25rem 0'}}><strong>Kilometraje:</strong> {v.km || 'No especificado'}</p>
                   <p style={{margin:'0.25rem 0',fontSize:'1.1rem',fontWeight:'700',color:'var(--primary)'}}><strong>Precio:</strong> {v.price}</p>
                 </div>
                 <div style={{display:'flex',gap:'.6rem',marginTop:'.6rem'}}>
