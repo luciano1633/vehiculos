@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useVehicles } from '../context/VehiclesContext'
+import styles from './Inventory.module.css'
 
 // Página que lista el inventario en una tabla con filtros y detalle
 export default function Inventory(){
@@ -39,33 +40,31 @@ export default function Inventory(){
     <main className="page inventory">
       <h2>Inventario de vehículos</h2>
 
-      <div className="card mb-3 p-3" style={{background:'transparent',border:'none'}}>
-        <div className="row gx-3 gy-2 align-items-end" style={{display:'flex',alignItems:'flex-end',gap:12}}>
-          <div className="col-sm-3" style={{minWidth:160}}>
-            <label className="form-label">Marca</label>
-            <select className="form-select" value={marca} onChange={e=>setMarca(e.target.value)}>
-              <option value="">Todas</option>
-              {marcas.map(m => <option key={m} value={m}>{m}</option>)}
-            </select>
-          </div>
+      <div className={styles.filterContainer}>
+        <div className={styles.filterGroup}>
+          <label htmlFor="filter-marca">Marca</label>
+          <select id="filter-marca" className="form-select" value={marca} onChange={e=>setMarca(e.target.value)}>
+            <option value="">Todas</option>
+            {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+          </select>
+        </div>
 
-          <div className="col-sm-3" style={{minWidth:160}}>
-            <label className="form-label">Año</label>
-            <select className="form-select" value={year} onChange={e=>setYear(e.target.value)}>
-              <option value="">Todos</option>
-              {years.map(y => <option key={y} value={y}>{y}</option>)}
-            </select>
-          </div>
+        <div className={styles.filterGroup}>
+          <label htmlFor="filter-year">Año</label>
+          <select id="filter-year" className="form-select" value={year} onChange={e=>setYear(e.target.value)}>
+            <option value="">Todos</option>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
 
-          <div className="col-sm-3" style={{minWidth:200}}>
-            <label className="form-label">Precio máximo (CLP)</label>
-            <input className="form-control" placeholder="ej. 15000000" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} />
-          </div>
+        <div className={styles.filterGroup}>
+          <label htmlFor="filter-price">Precio máximo (CLP)</label>
+          <input id="filter-price" className="form-control" placeholder="ej. 15000000" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} />
+        </div>
 
-          <div className="col-sm-3 d-flex gap-2" style={{minWidth:180}}>
-            <button className="btn btn-outline-secondary" onClick={()=>{ setMarca(''); setYear(''); setMaxPrice('') }}>Limpiar</button>
-            <button className="btn btn-primary" onClick={()=>{ /* placeholder: could trigger analytics */ }}>Filtrar</button>
-          </div>
+        <div className={styles.filterActions}>
+          <button className="btn btn-outline-secondary" onClick={()=>{ setMarca(''); setYear(''); setMaxPrice('') }}>Limpiar</button>
+          <button className="btn btn-primary" onClick={()=>{ /* placeholder */ }}>Filtrar</button>
         </div>
       </div>
 

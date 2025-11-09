@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-// Use URL imports so Vite resolves the correct base path (works with `basename`)
-const kiaImg = new URL('../components/img/kia.jpeg', import.meta.url).href
-const kiaImg2 = new URL('../components/img/kia2.jpeg', import.meta.url).href
-const subaruImg = new URL('../components/img/subaru.jpg', import.meta.url).href
-const subaruImg2 = new URL('../components/img/subaru2.jpg', import.meta.url).href
-const hyundaiImg = new URL('../components/img/hyundai.jpg', import.meta.url).href
-const hyundaiImg2 = new URL('../components/img/hiundai2.jpeg', import.meta.url).href
+import kiaImg from '../components/img/kia.jpeg'
+import kiaImg2 from '../components/img/kia2.jpeg'
+import subaruImg from '../components/img/subaru.jpg'
+import subaruImg2 from '../components/img/subaru2.jpg'
+import hyundaiImg from '../components/img/hyundai.jpg'
+import hyundaiImg2 from '../components/img/hiundai2.jpeg'
 
 const VehiclesContext = createContext(null)
 
