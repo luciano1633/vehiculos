@@ -39,43 +39,52 @@ export default function Inventory(){
     <main className="page inventory">
       <h2>Inventario de vehículos</h2>
 
-      <div className="mb-3" style={{display:'flex',gap:'.6rem',flexWrap:'wrap',marginBottom:'1rem'}}>
-        <div>
-          <label className="form-label" style={{display:'block'}}>Marca</label>
-          <select className="form-select" value={marca} onChange={e=>setMarca(e.target.value)}>
-            <option value="">Todas</option>
-            {marcas.map(m => <option key={m} value={m}>{m}</option>)}
-          </select>
-        </div>
+      <div className="card mb-3 p-3" style={{background:'transparent',border:'none'}}>
+        <div className="row gx-3 gy-2 align-items-end">
+          <div className="col-sm-3">
+            <label className="form-label">Marca</label>
+            <select className="form-select" value={marca} onChange={e=>setMarca(e.target.value)}>
+              <option value="">Todas</option>
+              {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+            </select>
+          </div>
 
-        <div>
-          <label className="form-label" style={{display:'block'}}>Año</label>
-          <select className="form-select" value={year} onChange={e=>setYear(e.target.value)}>
-            <option value="">Todos</option>
-            {years.map(y => <option key={y} value={y}>{y}</option>)}
-          </select>
-        </div>
+          <div className="col-sm-3">
+            <label className="form-label">Año</label>
+            <select className="form-select" value={year} onChange={e=>setYear(e.target.value)}>
+              <option value="">Todos</option>
+              {years.map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </div>
 
-        <div>
-          <label className="form-label" style={{display:'block'}}>Precio máximo (CLP)</label>
-          <input className="form-control" placeholder="ej. 15000000" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} />
+          <div className="col-sm-3">
+            <label className="form-label">Precio máximo (CLP)</label>
+            <input className="form-control" placeholder="ej. 15000000" value={maxPrice} onChange={e=>setMaxPrice(e.target.value)} />
+          </div>
+
+          <div className="col-sm-3 d-flex gap-2">
+            <button className="btn btn-outline-secondary" onClick={()=>{ setMarca(''); setYear(''); setMaxPrice('') }}>Limpiar</button>
+            <button className="btn btn-primary" onClick={()=>{ /* placeholder: could trigger analytics */ }}>Filtrar</button>
+          </div>
         </div>
       </div>
 
-      <div className="cards">
+      <div className="row">
         {filtered.map(v => (
-          <article key={v.id} className="card vehicle-card" style={{cursor:'pointer'}} onClick={()=>setDetail(v)}>
-            <img src={v.img} alt={v.title} />
-            <div className="card-body">
-              <h3>{v.title}</h3>
-              <p style={{color:'var(--muted)'}}>{v.desc}</p>
-              <p><strong>{v.price}</strong> • {v.year}</p>
-              <div style={{display:'flex',gap:'.5rem'}}>
-                <button className="btn cta" onClick={(e)=>{ e.stopPropagation(); toggleAvailability(v.id) }}>{v.status === 'vendido' ? 'Vendido' : 'Disponible'}</button>
-                <button className="btn ghost" onClick={(e)=>{ e.stopPropagation(); markPossiblePurchase(v.id) }}>Marcar posible compra</button>
+          <div key={v.id} className="col-md-4 mb-3">
+            <article className="card vehicle-card h-100" style={{cursor:'pointer'}} onClick={()=>setDetail(v)}>
+              <img src={v.img} alt={v.title} />
+              <div className="card-body">
+                <h3>{v.title}</h3>
+                <p style={{color:'var(--muted)'}}>{v.desc}</p>
+                <p><strong>{v.price}</strong> • {v.year}</p>
+                <div style={{display:'flex',gap:'.5rem'}}>
+                  <button className="btn cta" onClick={(e)=>{ e.stopPropagation(); toggleAvailability(v.id) }}>{v.status === 'vendido' ? 'Vendido' : 'Disponible'}</button>
+                  <button className="btn ghost" onClick={(e)=>{ e.stopPropagation(); markPossiblePurchase(v.id) }}>Marcar posible compra</button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         ))}
       </div>
 
