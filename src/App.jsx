@@ -5,6 +5,7 @@ import QuienesSomos from './pages/QuienesSomos'
 import Contactanos from './pages/Contactanos'
 import AddVehicle from './pages/AddVehicle'
 import Inventory from './pages/Inventory'
+import PossiblePurchases from './pages/PossiblePurchases'
 import Login from './pages/Login'
 import NavBottom from './components/NavBottom'
 import Footer from './components/Footer'
@@ -42,7 +43,8 @@ export default function App(){
         <Route path="/login" element={<Login />} />
         {/* Protegemos rutas administrativas */}
         <Route path="/agregar" element={<RequireAuth><AddVehicle/></RequireAuth>} />
-        <Route path="/inventario" element={<RequireAuth><Inventory/></RequireAuth>} />
+  <Route path="/inventario" element={<RequireAuth><Inventory/></RequireAuth>} />
+  <Route path="/posibles" element={<RequireAuth><PossiblePurchases/></RequireAuth>} />
       </Routes>
       
       {/* Pie de página global */}

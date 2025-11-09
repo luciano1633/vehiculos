@@ -56,29 +56,43 @@ export function VehiclesProvider({ children }){
   const STORAGE_KEY = 'venta_de_vehiculos'
 
   // Inicializar el estado leyendo desde localStorage si existe; si no, usar initialVehicles
+  // Migración: antes guardábamos solo un array de vehicles; ahora guardamos un objeto { vehicles, possible }
   const [vehicles, setVehicles] = useState(() => {
     try{
       const raw = localStorage.getItem(STORAGE_KEY)
       if(!raw) return initialVehicles
       const parsed = JSON.parse(raw)
-      // Si el storage está corrupto o vacío, fallback
-      if(!Array.isArray(parsed)) return initialVehicles
-      return parsed
+      // Soportar formato antiguo (array)
+      if(Array.isArray(parsed)) return parsed
+      if(parsed && Array.isArray(parsed.vehicles)) return parsed.vehicles
+      return initialVehicles
     } catch (err){
-      // En caso de error, usar inventario por defecto
       return initialVehicles
     }
   })
 
-  // Sincroniza el inventario en localStorage cada vez que cambia
+  const [possiblePurchases, setPossiblePurchases] = useState(() => {
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if(!raw) return []
+      const parsed = JSON.parse(raw)
+      if(Array.isArray(parsed)) return []
+      if(parsed && Array.isArray(parsed.possiblePurchases)) return parsed.possiblePurchases
+      return []
+    } catch (err){
+      return []
+    }
+  })
+
+  // Sincroniza el inventario y la lista de posibles compras en localStorage cada vez que cambian
   useEffect(()=>{
     try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(vehicles))
+      const payload = { vehicles, possiblePurchases }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
     }catch(err){
-      // si falla el guardado, no rompemos la app; podría registrarse el error si se desea
       console.warn('No se pudo guardar inventario en localStorage', err)
     }
-  }, [vehicles])
+  }, [vehicles, possiblePurchases])
 
   // Agrega un vehículo al inventario (simple push con id incremental)
   const addVehicle = (veh) => {
@@ -91,7 +105,27 @@ export function VehiclesProvider({ children }){
     setVehicles(prev => prev.map(v => v.id === id ? { ...v, status: v.status === 'vendido' ? 'disponible' : 'vendido' } : v))
   }
 
-  const value = { vehicles, addVehicle, toggleAvailability }
+  // Marca un vehículo como posible compra: lo mueve desde `vehicles` hacia `possiblePurchases`
+  const markPossiblePurchase = (id) => {
+    setVehicles(prev => {
+      const item = prev.find(v => v.id === id)
+      if(!item) return prev
+      setPossiblePurchases(pp => [...pp, item])
+      return prev.filter(v => v.id !== id)
+    })
+  }
+
+  // Desmarca un vehículo (lo devuelve al inventario general)
+  const unmarkPossiblePurchase = (id) => {
+    setPossiblePurchases(prev => {
+      const item = prev.find(v => v.id === id)
+      if(!item) return prev
+      setVehicles(vs => [...vs, item])
+      return prev.filter(v => v.id !== id)
+    })
+  }
+
+  const value = { vehicles, addVehicle, toggleAvailability, possiblePurchases, markPossiblePurchase, unmarkPossiblePurchase }
 
   return (
     <VehiclesContext.Provider value={value}>

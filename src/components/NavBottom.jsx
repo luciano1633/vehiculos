@@ -23,6 +23,7 @@ export default function NavBottom({ isDark, toggleTheme }){
             <>
               <NavLink to="/agregar" className={({isActive})=> isActive? 'active' : ''}>Agregar vehículo</NavLink>
               <NavLink to="/inventario" className={({isActive})=> isActive? 'active' : ''}>Inventario</NavLink>
+              <NavLink to="/posibles" className={({isActive})=> isActive? 'active' : ''}>Posibles</NavLink>
             </>
           )}
         </nav>
