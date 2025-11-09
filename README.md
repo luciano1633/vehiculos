@@ -71,10 +71,10 @@ npm run deploy
 ```
 src/
 ├── components/          # Componentes reutilizables
-│   ├── NavBottom.jsx    # Navegación principal
 │   ├── Footer.jsx       # Pie de página
-│   ├── ThemeToggle.jsx  # Toggle tema claro/oscuro
-│   └── styles.css       # Estilos globales
+│   ├── NavBottom.jsx    # Navegación principal
+│   └── ThemeToggle.jsx  # Toggle tema claro/oscuro
+│
 ├── pages/               # Páginas de la aplicación
 │   ├── Home.jsx         # Página principal
 │   ├── QuienesSomos.jsx # Información de la empresa
@@ -83,16 +83,25 @@ src/
 │   ├── AddVehicle.jsx   # Formulario agregar vehículo
 │   ├── Inventory.jsx    # Listado con filtros
 │   └── PossiblePurchases.jsx # Vehículos marcados
-├── context/             # Estado global
+│
+├── styles/              # Estilos CSS
+│   ├── global.css       # Estilos globales y utilidades
+│   └── Inventory.module.css # CSS Modules para Inventory
+│
+├── context/             # Estado global (Context API)
 │   ├── VehiclesContext.jsx # Manejo del inventario
 │   └── AuthContext.jsx     # Autenticación
+│
 ├── utils/               # Utilidades reutilizables
 │   ├── price.js         # Helpers de formato de precio
 │   └── images.js        # Helpers de rutas de imágenes
+│
 ├── constants/           # Constantes del proyecto
 │   └── storage.js       # Claves de localStorage
+│
 ├── data/                # Datos iniciales
 │   └── vehicles.js      # Inventario inicial
+│
 ├── App.jsx              # Componente raíz
 └── main.jsx             # Punto de entrada
 ```
@@ -104,8 +113,11 @@ src/
 - **`src/pages/AddVehicle.jsx`** — Formulario para agregar vehículos con validación
 - **`src/pages/Inventory.jsx`** — Listado y gestión de estado con filtros (marca, año, precio)
 - **`src/pages/Login.jsx`** — Acceso administrador
-- **`src/utils/price.js`** — Utilidades para formato de precios
-- **`src/utils/images.js`** — Helper para rutas de imágenes públicas
+- **`src/utils/price.js`** — Utilidades para formato de precios (parsePrice, formatPrice)
+- **`src/utils/images.js`** — Helper para rutas de imágenes públicas (getImagePath, migrateImagePaths)
+- **`src/styles/global.css`** — Estilos globales, variables CSS y tema claro/oscuro
+- **`src/styles/Inventory.module.css`** — CSS Modules para componente Inventory
+- **`src/constants/storage.js`** — Constantes de claves para localStorage
 - **`vite.config.js`** — Configuración optimizada con code splitting
 
 ## ⚡ Optimizaciones Implementadas
