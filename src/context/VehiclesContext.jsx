@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import kiaImg from '../components/img/kia.jpeg'
-import kiaImg2 from '../components/img/kia2.jpeg'
-import subaruImg from '../components/img/subaru.jpg'
-import subaruImg2 from '../components/img/subaru2.jpg'
-import hyundaiImg from '../components/img/hyundai.jpg'
-import hyundaiImg2 from '../components/img/hiundai2.jpeg'
+
+// Usar rutas desde public para assets estáticos
+const kiaImg = '/vehiculos/img/kia.jpg'
+const kiaImg2 = '/vehiculos/img/kia2.jpg'
+const subaruImg = '/vehiculos/img/subaru.jpg'
+const subaruImg2 = '/vehiculos/img/subaru2.jpg'
+const hyundaiImg = '/vehiculos/img/hyundai.jpg'
+const hyundaiImg2 = '/vehiculos/img/hiundai2.jpg'
 
 const VehiclesContext = createContext(null)
 
