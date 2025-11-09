@@ -66,21 +66,43 @@ export default function Inventory(){
       <div className="row">
         {filtered.map(v => (
           <div key={v.id} className="col-md-4 mb-3">
-            <article className="card vehicle-card h-100" style={{cursor:'pointer'}} onClick={()=>setDetail(v)}>
-              <img 
-                src={v.img} 
-                alt={v.title} 
-                loading="lazy"
-                style={{width:'100%',height:200,objectFit:'cover',background:'#2d2d2d'}} 
-                onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%232d2d2d"/><text x="50%" y="50%" fill="%23aaa" font-size="20" text-anchor="middle" dominant-baseline="middle">Imagen no disponible</text></svg>'}} 
-              />
+            <article className="card value-card h-100">
               <div className="card-body">
                 <h3>{v.title}</h3>
-                <p style={{color:'var(--muted)'}}>{v.desc}</p>
-                <p><strong>{v.price}</strong> • {v.year}</p>
-                <div style={{display:'flex',gap:'.5rem'}}>
-                  <button className="btn cta" onClick={(e)=>{ e.stopPropagation(); toggleAvailability(v.id) }}>{v.status === 'vendido' ? 'Vendido' : 'Disponible'}</button>
-                  <button className="btn ghost" onClick={(e)=>{ e.stopPropagation(); markPossiblePurchase(v.id) }}>Marcar posible compra</button>
+                <p style={{color:'var(--muted)',marginBottom:'.5rem'}}>{v.desc}</p>
+                <div style={{marginBottom:'.75rem'}}>
+                  <p style={{margin:'0.25rem 0'}}><strong>Marca:</strong> {v.marca}</p>
+                  <p style={{margin:'0.25rem 0'}}><strong>Modelo:</strong> {v.modelo}</p>
+                  <p style={{margin:'0.25rem 0'}}><strong>Año:</strong> {v.year}</p>
+                  <p style={{margin:'0.25rem 0'}}><strong>Precio:</strong> {v.price}</p>
+                  <p style={{margin:'0.25rem 0'}}>
+                    <strong>Estado:</strong> 
+                    <span style={{
+                      marginLeft:'.5rem',
+                      padding:'.2rem .5rem',
+                      borderRadius:'4px',
+                      fontSize:'.85rem',
+                      fontWeight:'600',
+                      background: v.status === 'vendido' ? '#fee' : '#efe',
+                      color: v.status === 'vendido' ? '#c00' : '#070'
+                    }}>
+                      {v.status === 'vendido' ? 'Vendido' : 'Disponible'}
+                    </span>
+                  </p>
+                </div>
+                <div style={{display:'flex',gap:'.5rem',flexWrap:'wrap'}}>
+                  <button 
+                    className={`btn ${v.status === 'vendido' ? 'sold' : 'cta'}`}
+                    onClick={()=>toggleAvailability(v.id)}
+                  >
+                    {v.status === 'vendido' ? 'Marcar disponible' : 'Marcar vendido'}
+                  </button>
+                  <button className="btn ghost" onClick={()=>markPossiblePurchase(v.id)}>
+                    Posible compra
+                  </button>
+                  <button className="btn primary" onClick={()=>setDetail(v)}>
+                    Ver detalles
+                  </button>
                 </div>
               </div>
             </article>
@@ -90,26 +112,61 @@ export default function Inventory(){
 
       {detail && (
         <div className="details-backdrop" role="dialog" aria-modal="true" onClick={()=>setDetail(null)}>
-          <div className="details-modal" onClick={(e)=>e.stopPropagation()}>
+          <div className="details-modal" onClick={(e)=>e.stopPropagation()} style={{maxWidth:'600px'}}>
             <button className="modal-close" onClick={()=>setDetail(null)} aria-label="Cerrar">×</button>
-            <div className="details-grid">
-              <div className="gallery">
-                <img src={detail.img} alt={detail.title} style={{width:'100%',height:360,objectFit:'cover',borderRadius:8}} />
-              </div>
-              <div className="details">
-                <h2>{detail.title}</h2>
-                <p>{detail.desc}</p>
-                <ul className="specs">
-                  <li><strong>Marca:</strong> {detail.marca}</li>
-                  <li><strong>Modelo:</strong> {detail.modelo}</li>
-                  <li><strong>Año:</strong> {detail.year}</li>
-                  <li><strong>Kilometraje:</strong> {detail.km}</li>
-                  <li><strong>Precio:</strong> {detail.price}</li>
-                </ul>
-                <div style={{display:'flex',gap:'.6rem',marginTop:'.8rem'}}>
-                  <button className="btn cta" onClick={()=>{ markPossiblePurchase(detail.id); setDetail(null) }}>Marcar como posible compra</button>
-                  <button className="btn ghost" onClick={()=>setDetail(null)}>Cerrar</button>
+            <div style={{padding:'1.5rem'}}>
+              <h2 style={{marginTop:0}}>{detail.title}</h2>
+              <p style={{color:'var(--muted)',marginBottom:'1rem'}}>{detail.desc}</p>
+              <div style={{
+                display:'grid',
+                gridTemplateColumns:'1fr 1fr',
+                gap:'0.75rem',
+                marginBottom:'1.5rem',
+                padding:'1rem',
+                background:'var(--bg)',
+                borderRadius:'8px'
+              }}>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Marca</strong>
+                  <p style={{margin:0}}>{detail.marca}</p>
                 </div>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Modelo</strong>
+                  <p style={{margin:0}}>{detail.modelo}</p>
+                </div>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Año</strong>
+                  <p style={{margin:0}}>{detail.year}</p>
+                </div>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Kilometraje</strong>
+                  <p style={{margin:0}}>{detail.km}</p>
+                </div>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Precio</strong>
+                  <p style={{margin:0,fontSize:'1.2rem',fontWeight:'700',color:'var(--primary)'}}>{detail.price}</p>
+                </div>
+                <div>
+                  <strong style={{display:'block',marginBottom:'.25rem',fontSize:'.9rem',color:'var(--muted)'}}>Estado</strong>
+                  <p style={{margin:0}}>
+                    <span style={{
+                      padding:'.25rem .6rem',
+                      borderRadius:'4px',
+                      fontSize:'.85rem',
+                      fontWeight:'600',
+                      background: detail.status === 'vendido' ? '#fee' : '#efe',
+                      color: detail.status === 'vendido' ? '#c00' : '#070'
+                    }}>
+                      {detail.status === 'vendido' ? 'Vendido' : 'Disponible'}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div style={{display:'flex',gap:'.6rem',flexWrap:'wrap'}}>
+                <button className="btn cta" onClick={()=>{ markPossiblePurchase(detail.id); setDetail(null) }}>
+                  Marcar como posible compra
+                </button>
+                <button className="btn ghost" onClick={()=>setDetail(null)}>Cerrar</button>
               </div>
             </div>
           </div>
